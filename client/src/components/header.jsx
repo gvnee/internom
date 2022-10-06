@@ -1,5 +1,6 @@
 import logo from "../assets/internom.png";
 import search from "../assets/search.svg";
+import {Outlet, Link} from "react-router-dom";
 
 export default function Header(){
 return(
@@ -16,9 +17,9 @@ return(
             </a>
             </div>
             <div>
-                <a href="#" className="text-text text-base mr-5">
+                <Link to={`/login`} className="text-text text-base mr-5">
                     <i className="fa fa-user"></i>
-                </a>
+                </Link>
                 <a href="#" className="text-text text-base">
                     <i className="fa fa-cart-plus"></i>
                 </a>
@@ -27,7 +28,9 @@ return(
     </div>
     <div className="flex m-auto max-w-4xl justify-between items-center py-6 flex-col md:flex-row">
         <div className="w-2/5 md:w-full">
-            <img className="h-auto w-60 cursor-pointer" src={logo} alt="logo" />
+            <Link to={`/`}>
+                <img className="h-auto w-60 cursor-pointer" src={logo} alt="logo" />
+            </Link>
         </div>
         <div className="flex w-3/5 md:w-full">
             <input type="text" className="border border-text px-5 py-1 w-full" placeholder="хайх" />
@@ -38,7 +41,7 @@ return(
     </div>
     <nav className="bg-text text-white">
         <div className="flex flex-col max-w-4xl m-auto font-bold text-xs space-x-6 sm:flex-row">
-            <a   className="ll py-5 hover:cursor-pointer border-b-2 border-b-text hover:border-b-orange-500" href="#" ><i className="fa fa-home"></i></a>
+            <Link to={`/`} className="ll py-5 hover:cursor-pointer border-b-2 border-b-text hover:border-b-orange-500" ><i className="fa fa-home"></i></Link>
             <div className="ll py-5 hover:cursor-pointer border-b-2 border-b-text hover:border-b-orange-500">НОМ</div>
             <div className="ll py-5 hover:cursor-pointer border-b-2 border-b-text hover:border-b-orange-500">ENGLISH BOOKS</div>
             <div className="ll py-5 hover:cursor-pointer border-b-2 border-b-text hover:border-b-orange-500">ХҮҮХЭД</div>

@@ -15,7 +15,8 @@ module.exports = {
       colors: {
         text: "#1a1a1a",
         rng: "#fc8f43",
-        footer: "#f1f1f1"
+        footer: "#f1f1f1",
+        popup: "#f39c12"
       }
     },
   },
