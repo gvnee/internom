@@ -5,7 +5,6 @@ const {customer} = require("../controllers");
 
 router.use(bodyParser.json());
 
-
 router.post('/', customer.create);
 
 module.exports = router;
