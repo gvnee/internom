@@ -545,12 +545,12 @@ video {
   margin-right: 1.25rem;
 }
 
-.mt-20 {
-  margin-top: 5rem;
-}
-
 .mt-32 {
   margin-top: 8rem;
+}
+
+.mt-20 {
+  margin-top: 5rem;
 }
 
 .flex {

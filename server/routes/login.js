@@ -1,10 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const bodyParser = require("body-parser");
-const {customer} = require("../controllers");
+const {login} = require("../controllers");
 
-router.use(bodyParser.json());
-
-router.post('/', customer.authorize);
+router.post('/', login.authorize);
 
 module.exports = router;

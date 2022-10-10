@@ -1,5 +1,7 @@
 const {models: {Customer}} = require('../models');
 
+// const {createTokens} = require("./JWT");
+
 module.exports = {
     create: async (req, res) => {
         if(req.body.email && req.body.password){
@@ -33,6 +35,12 @@ module.exports = {
                 res.send("user doesn't exist");
             }
             else if(inputPassword === customer.password){
+                // const accessToken = createTokens(Customer);
+
+                // res.cookie("access-token", accessToken, {
+                //     maxAge: 60*60*24*30*1000
+                // });
+
                 res.send("logged in");
             }
             else{

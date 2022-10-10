@@ -20,7 +20,7 @@ export default function Login(){
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Origin': "http://localhost:5173"
+                // 'Origin': "http://localhost:5173"
             },
             body: JSON.stringify({email, password})
         };
