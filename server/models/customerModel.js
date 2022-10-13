@@ -1,15 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
-    //create Customer table
+
     const Customer = sequelize.define("Customer", {
-        // name: {
-        //     type: DataTypes.STRING(100),
-        //     allowNull: false
-        // },
-        // username: {
-        
-        //     type: DataTypes.STRING(30),
-        //     allowNull: false
-        // },
+
         password: {
             type: DataTypes.STRING(30),
             allowNull: false
@@ -17,6 +9,9 @@ module.exports = (sequelize, DataTypes) => {
         email: {
             type: DataTypes.STRING(100),
             allowNull: false
+        },
+        refreshToken: {
+            type: DataTypes.STRING(250)
         }
     },
     {

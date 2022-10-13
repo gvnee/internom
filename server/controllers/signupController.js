@@ -1,28 +1,31 @@
 const {models: {Customer}} = require('../models');
 
-module.exports = {
+const create = async (req, res) => {
+    const {email: inMail,password: inPwd} = req.body; 
 
-    create: async (req, res) => {
-    if(req.body.email && req.body.password){
-        const {email: inputEmail,password: inputPassword} = req.body;
-        
-        const emailRegex = new RegExp(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/, 'gm');
-        
-        const isValidEmail = emailRegex.test(inputEmail);
+    if(!inMail || !inPwd)
+    return res.status(400).json({"message": "provide both email and password"});
 
-        if(!isValidEmail) res.send("invalid Email");
-        else{
-            const [customer, created] = await Customer.findOrCreate({
-                where: {email: inputEmail},
-                defaults: {
-                    password: inputPassword
-                }
-            });
+    const emailRegex = new RegExp(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/, 'gm');
+    const passwordRegex = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/);
 
-            if(created) res.send("account created");
-            else res.send("account already exists");
-        }
+    if(!emailRegex.test(inMail)) return res.status(400).json({"message": "invalid email"});
+    if(!passwordRegex.test(inPwd)) return res.status(400).json({"message": "invalid password"});
+
+    try {
+        const [customer, created] = await Customer.findOrCreate({
+            where: {email: inMail},
+            defaults: {
+                password: inPwd
+            }
+        });
+        const createdEmail = customer.dataValues.email;
+        if(created) return res.status(201).json({"message": `${createdEmail} created`});
+        else return res.status(400).json({"message": "account already exists"});
+
     }
-    else res.send("input empty");
-    }
+    catch(error){res.status(500).json({"message": error.message});}
+
 }
+
+module.exports = {create};

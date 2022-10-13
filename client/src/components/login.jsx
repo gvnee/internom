@@ -35,13 +35,14 @@ export default function Login(){
                 'Content-Type': 'application/json',
                 // 'Origin': "http://localhost:5173"
             },
+            credentials: "include",
             body: JSON.stringify({email, password})
         };
         fetch(url, requestOptions)
         .then(response => response.text())
         .then((data) => {
             setAuth({data});
-            navigate(from, {replace: true});
+            navigate(from, {replace: true});    
         })
         .catch(error => {
             console.log("submit error", error);
