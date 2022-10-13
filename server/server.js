@@ -17,6 +17,8 @@ app.use(express.urlencoded({ extended: false }));
 //routes
 const signup = require('./routes/signup');
 const login = require('./routes/login');
+const addBook = require('./routes/addBook');
+const books = require('./routes/books');
 
 const db = require("./models");
 
@@ -26,6 +28,9 @@ const db = require("./models");
 
 app.use('/signup', signup);
 app.use('/login', login);
+app.use('/books', books);
+app.use('/addBook', addBook);
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);

@@ -1,8 +1,9 @@
 import logo from "../assets/internom.png";
-import search from "../assets/search.svg";
-import {Outlet, Link} from "react-router-dom";
+import {Link} from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 export default function Header(){
+const {auth} = useAuth();
 return(
 <div className="w-screen">
     <div className="h-1 w-screen bg-orange-500"></div>
@@ -17,9 +18,18 @@ return(
             </a>
             </div>
             <div>
+                {
+                auth?.data ?
+                <Link to={`/profile`} className="text-text text-base mr-5">
+                    <i className="fa fa-user"></i>
+                </Link>
+                :
                 <Link to={`/login`} className="text-text text-base mr-5">
                     <i className="fa fa-user"></i>
                 </Link>
+                }
+                
+                
                 <a href="#" className="text-text text-base">
                     <i className="fa fa-cart-plus"></i>
                 </a>
@@ -47,6 +57,7 @@ return(
             <div className="ll py-5 hover:cursor-pointer border-b-2 border-b-text hover:border-b-orange-500">ХҮҮХЭД</div>
             <div className="ll py-5 hover:cursor-pointer border-b-2 border-b-text hover:border-b-orange-500">БИЧИГ ХЭРЭГ/БЭЛЭГ ДУРСГАЛ</div>
             <div className="ll py-5 hover:cursor-pointer border-b-2 border-b-text hover:border-b-orange-500 text-orange-400"  >ТУСЛАМЖ</div>
+            <Link to={`/addBook`} className="ll py-5 hover:cursor-pointer border-b-2 border-b-text hover:border-b-orange-500" >НОМ НЭМЭХ</Link>
         </div>
     </nav>
 </div>

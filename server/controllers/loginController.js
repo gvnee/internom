@@ -14,12 +14,12 @@ module.exports = {
             else if(inputPassword === customer.password){
                 const token = createTokens(Customer);
 
-                res.cookie("access-token", token, {
-                    maxAge: 60*60*24*1000,
-                    httpOnly: true,
+                res.cookie("token", token, {
+                    maxAge: 60*30,
+                    httpOnly: true
                 });
 
-                res.redirect("http://etest.mn:5173");
+                res.send(token);
             }
             else{
                 res.send("wrong password!");

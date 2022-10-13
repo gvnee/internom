@@ -1,31 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './assets/main.css'
-import './routes/root'
-import ErrorPage from './error-page';
-import Root from './routes/root';
-import LoginPage from './routes/loginPage';
-
+import App from "./app";
 import {
-  createBrowserRouter,
-  RouterProvider,
+  BrowserRouter,
+  Routes,
   Route
 } from "react-router-dom";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root />,
-    errorElement: <ErrorPage />
-  },
-  {
-    path: "login",
-    element: <LoginPage />,
-  }
-]);
+import { AuthProvider } from './context/authProvider';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <BrowserRouter>
+    <AuthProvider>
+      <Routes>
+        <Route path="/*" element={<App />} />
+      </Routes>
+    </AuthProvider>
+    </BrowserRouter>
   </React.StrictMode>
 )

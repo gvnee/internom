@@ -1,18 +1,18 @@
 const {sign, verify} = require("jsonwebtoken");
 
 const createTokens = (customer) => {
-    const accessToken = sign(
+    const token = sign(
         {username: customer.username},
         process.env.JWT_SECRET,
-        {expiresIn: "1h"}
+        {expiresIn: "10min"}
     );
-    return accessToken;
+    return token;
 }
 
-const cookieJwtAuth = (req, res, next) => {
+const jwtAuth = async (req, res, next) => {
     const token = req.cookies.token;
     try{
-        const username = jwt.verify(token, process.env.JWT_SECRET);
+        const username = await jwt.verify(token, process.env.JWT_SECRET);
         req.username = username;
         next();
     }
@@ -22,4 +22,4 @@ const cookieJwtAuth = (req, res, next) => {
     }
 }
 
-module.exports = {createTokens, cookieJwtAuth};
+module.exports = {createTokens, jwtAuth};

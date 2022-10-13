@@ -1,9 +1,22 @@
-import {useState} from 'react'
+import { useEffect, useState } from 'react';
+import useAuth from "../hooks/useAuth";
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function Login(){
 
+    const {setAuth} = useAuth();
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errMsg, setErrMsg] = useState('');
+
+    useEffect(() => {
+        setErrMsg('');
+    }, [email, password]);
 
     const handleEmailChange = e => {
         setEmail(e.target.value);
@@ -24,13 +37,17 @@ export default function Login(){
             },
             body: JSON.stringify({email, password})
         };
-
         fetch(url, requestOptions)
         .then(response => response.text())
         .then((data) => {
-            console.log(data)
+            setAuth({data});
+            navigate(from, {replace: true});
         })
-        .catch(error => console.log("submit error", error))
+        .catch(error => {
+            console.log("submit error", error);
+            setErrMsg(error);
+        })
+
     }
 
 return(
