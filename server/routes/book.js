@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const {books} = require("../controllers/bookController");
+const {getBooks, addBook, updateBook, deleteBook, getBook} = require("../controllers/bookController");
 
 router.route("/")
-    .get(books)
-    // .post(jwtAuth)
-    // .put(jwtAuth)
-    // .delete(jwtAuth);
+    .get(getBooks)
+    .post(addBook)
+    .put(updateBook)
+    .delete(deleteBook);
+
+router.get("/:id", getBook);
 
 module.exports = router;
