@@ -9,7 +9,7 @@ const handleLogout = async (req, res) => {
 
     const user = await Customer.findOne({where: {refreshToken: refreshTKN}});
     if(!user){
-        res.clearCookie("jwt", refreshTKN, {
+        res.clearCookie("jwt", {
             httpOnly: true,
             sameSite: 'None',
             secure: true
@@ -17,11 +17,12 @@ const handleLogout = async (req, res) => {
         return res.sendStatus(204);
     }
 
-    await user.update({refreshToken: null}, {
-        where: {
-            refreshToken: refreshTKN,
-        }
-    });
+    await user.update({refreshToken: null}
+        // , {
+        // where: {
+        //     refreshToken: refreshTKN,
+        // }}
+    );
 
     res.clearCookie("jwt", refreshTKN, {
         httpOnly: true,

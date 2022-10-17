@@ -5,9 +5,11 @@ const {getBooks, addBook, updateBook, deleteBook, getBook} = require("../control
 router.route("/")
     .get(getBooks)
     .post(addBook)
+
+
+router.route("/:id")
+    .get(getBook)
     .put(updateBook)
     .delete(deleteBook);
-
-router.get("/:id", getBook);
 
 module.exports = router;

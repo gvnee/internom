@@ -42,7 +42,7 @@ export default function Login(){
         .then(response => response.text())
         .then((data) => {
             setAuth({data});
-            navigate(from, {replace: true});    
+            navigate(from, {replace: true});
         })
         .catch(error => {
             console.log("submit error", error);

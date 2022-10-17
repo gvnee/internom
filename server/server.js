@@ -14,7 +14,7 @@ let corsOptions = {
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Credentials', true);
     next();
-})
+});
 
 app.use(cors(corsOptions));
 app.use(cookieParser());
@@ -34,7 +34,7 @@ app.use('/login', require('./routes/login'));
 app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
 
-app.use(jwtAuth);
+// app.use(jwtAuth);
 app.use('/book', require('./routes/book'));
 
 app.listen(port, () => {

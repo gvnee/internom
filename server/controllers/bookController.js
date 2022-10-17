@@ -1,9 +1,28 @@
 const {models: {Book}} = require('../models');
 const fs = require("fs");
+const path = require("path");
+
+const pathToImage = (book) => {
+    fs.readFile("./images/" + book.image, (err, data) => {
+        if(err) throw err;
+        book.image = data;
+    });
+}
 
 const getBooks = async (req, res) => {
     const books = await Book.findAll();
-    res.status(200).json({"books": books});
+    // books.forEach(pathToImage);
+    res.status(200).json({books});
+    console.log(books);
+    // fs.readFile("../images/" + books.cover, (err, data) => {
+    //     if(err) throw err;
+
+    //     res.status(200).json({
+    //         "title": books.title,
+    //         "price": books.price,
+    //         "cover": data
+    //     });
+    // })
 }
 
 const addBook = async (req, res) => {
@@ -13,7 +32,7 @@ const addBook = async (req, res) => {
 
     if(!title || !price || !image) return res.status(400).json({"message": "provide data"});
 
-    const imagePath = "/";
+    const imagePath = "cover.jpeg";
 
     try{
         const [book, created] = await Book.findOrCreate({
@@ -34,15 +53,49 @@ const addBook = async (req, res) => {
 }
 
 const deleteBook = async (req, res) => {
-
+    const {id} = req.params;
+    const book = await Book.findByPk(id);
+    if(!book) return res.status(400).json({"message": "book doesn't exist"});
+    try{
+        await book.destroy();
+        res.status(200).json({"message": "book deleted"});
+    }
+    catch(error){res.status(400).json({"message": error.message});}
 }
 
 const updateBook = async (req, res) => {
+    let {id, title, price, image} = req.body;
 
+    if(!id) return res.status(400).json({"message": "provide data"});
+
+    const book = await Book.findByPk(id);
+    if(!book) return res.status(400).json({"message": "book doesn't exist"});
+    
+    if(!title && !price && !image) return res.status(400).json({"message": "provide data"});
+
+    if(!title) title = book.title;
+    if(!price) price = book.price;
+    if(!image) image = book.image;
+
+    const imagePath = "cover.jpeg";
+
+    try{
+        book.set({
+            title: title,
+            price: price,
+            image: image
+        });
+        await book.save();
+        res.status(200).json({"message": "updated"});
+    }
+    catch(error){res.status(500).json({"message": error.message});}
 }
 
 const getBook = async (req, res) => {
-
+    const {id} = req.params;
+    const book = await Book.findByPk(id);
+    if(!book) return res.status(400).json({"message": "book doesn't exist"});
+    res.status(200).json(book);
 }
 
 module.exports = {getBooks, addBook, deleteBook, updateBook, getBook};
