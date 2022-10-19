@@ -1,19 +1,18 @@
 const {models: {Book}} = require('../models');
-const fs = require("fs");
 const path = require("path");
+const multer = require("multer");
 
-const pathToImage = (book) => {
-    fs.readFile("./images/" + book.image, (err, data) => {
-        if(err) throw err;
-        book.image = data;
-    });
-}
+// const pathToImage = (book) => {
+//     fs.readFile("./images/" + book.image, (err, data) => {
+//         if(err) throw err;
+//         book.image = data;
+//     });
+// }
 
 const getBooks = async (req, res) => {
     const books = await Book.findAll();
     // books.forEach(pathToImage);
     res.status(200).json({books});
-    console.log(books);
     // fs.readFile("../images/" + books.cover, (err, data) => {
     //     if(err) throw err;
 
@@ -25,12 +24,29 @@ const getBooks = async (req, res) => {
     // })
 }
 
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, "../images")
+//     },
+//     filename: (req, file, cb) => {
+//         // console.log("++++++++++++++",file);
+//         cb(null, Date.now() + path.extname(file.originalname))
+//     }
+// })
+
+// const upload = multer({storage: storage});
+const upload = multer({dest: "images/"});
+
+
 const addBook = async (req, res) => {
 
     //get image, save image to directory, save image path to database
-    const {title, price, image} = req.body;
+    const {title, price} = req.body;
 
-    if(!title || !price || !image) return res.status(400).json({"message": "provide data"});
+    console.log(req.body);
+    console.log("ayoooo", req.file);
+
+    if(!title || !price) return res.status(400).json({"message": "provide data"});
 
     const imagePath = "cover.jpeg";
 
@@ -98,4 +114,4 @@ const getBook = async (req, res) => {
     res.status(200).json(book);
 }
 
-module.exports = {getBooks, addBook, deleteBook, updateBook, getBook};
+module.exports = {getBooks, addBook, deleteBook, updateBook, getBook, upload};

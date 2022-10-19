@@ -13,7 +13,7 @@ const persistLogin = () => {
             try{
                 await refresh();
             }
-            catch(error){console.error(err)}
+            catch(error){console.error(error)}
             finally{setIsLoading(false)}
         }
         //                 && persist 
