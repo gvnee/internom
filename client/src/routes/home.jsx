@@ -1,65 +1,14 @@
-import {useState, useEffect} from "react";
-import Book from "../components/book"
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
 export default function Home(){
-
-    const [books, setBooks] = useState([]);
-    
-    // const axiosPrivate = useAxiosPrivate();
-    // useEffect(() => {
-    //     let isMounted = true;
-    //     const controller = new AbortController();
-
-    //     const getBooks = async () => {
-    //         try{
-    //             const res = await axiosPrivate.get('/book', {
-    //                 signal: controller.signal
-    //             });
-    //             isMounted && setBooks(res.data);
-    //         }catch(err){console.error(err)}
-    //     }
-
-    //     getBooks();
-
-    //     return () => {
-    //         isMounted = false;
-    //         controller.abort();
-    //     }
-    // }, []);
-
-    function getBooks(){
-        const url = "http://localhost:3000/book";
-
-        const requestOptions = {
-            method: 'GET',
-            headers: {
-                'Origin': "http://etest:5173"
-            },
-            credentials: "include"
-        };
-        fetch(url, requestOptions)
-        .then(res => res.json())
-        .then(data => {
-
-            setBooks(data.books);
-            console.log("data", data.books)
-        })  
-    }
-
-    useEffect(() => {
-        getBooks();
-    }, []);
-
-    
-    return(
-        <main className="flex gap-10 p-4">
-            {/* {console.log(books)} */}
-            {books?.length
-                ? books.map(book =>(
-                        <Book key={book.id} title={book.title} price={book.price} />)
-                        )
-                 : <p>No books to display</p>
-            }
-        </main>
+    return (
+        <div className="bg-hero w-screen flex justify-center">
+            <main className=" h-96 flex items-end gap-5 p-10 flex-col">
+                <p className="text-base text-white tracking-[0.3em]">
+                    "1984" номын зохиолч Жорж Оруэллийн ХАМГИЙН АЛДАРТАЙ УЛС ТӨРИЙН ЭЛЭГЛЭЛ
+                </p>
+                <p className="text-5xl uppercase font-bold text-text">Бүх амьтан тэгш эрхтэй</p>
+                <p className="text-5xl uppercase font-bold text-rose-900">гэхдээ зарим амьтан</p>
+                <p className="text-base uppercase text-text tracking-[0.1em]">Бусдаас илүү тэгш эрхтэй </p>
+            </main>
+        </div>
     )
-} 
+}   

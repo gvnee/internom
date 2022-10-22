@@ -1,54 +1,32 @@
 const {models: {Book}} = require('../models');
 const path = require("path");
 const multer = require("multer");
+const fs = require('fs');
 
-// const pathToImage = (book) => {
-//     fs.readFile("./images/" + book.image, (err, data) => {
-//         if(err) throw err;
-//         book.image = data;
-//     });
-// }
+const upload = multer({dest: "images/"});
 
 const getBooks = async (req, res) => {
     const books = await Book.findAll();
-    // books.forEach(pathToImage);
     res.status(200).json({books});
-    // fs.readFile("../images/" + books.cover, (err, data) => {
-    //     if(err) throw err;
-
-    //     res.status(200).json({
-    //         "title": books.title,
-    //         "price": books.price,
-    //         "cover": data
-    //     });
-    // })
 }
-
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, "../images")
-//     },
-//     filename: (req, file, cb) => {
-//         // console.log("++++++++++++++",file);
-//         cb(null, Date.now() + path.extname(file.originalname))
-//     }
-// })
-
-// const upload = multer({storage: storage});
-const upload = multer({dest: "images/"});
-
 
 const addBook = async (req, res) => {
 
     //get image, save image to directory, save image path to database
     const {title, price} = req.body;
 
-    console.log(req.body);
-    console.log("ayoooo", req.file);
+    const image = req.file;
 
-    if(!title || !price) return res.status(400).json({"message": "provide data"});
+    
+    if(!title || !price || !req.file) return res.status(400).json({"message": "provide data"});
 
-    const imagePath = "cover.jpeg";
+
+    const fileType = image.mimetype.split("/")[1];
+    const imagePath = image.filename + "." + fileType;
+
+    fs.rename(`./images/${image.filename}`, `./images/${imagePath}`, (error) => {
+        if(error) console.error(error);
+    });
 
     try{
         const [book, created] = await Book.findOrCreate({
@@ -80,7 +58,9 @@ const deleteBook = async (req, res) => {
 }
 
 const updateBook = async (req, res) => {
-    let {id, title, price, image} = req.body;
+    const {id} = req.params;
+    let {title, price} = req.body;
+    const image = req.file;
 
     if(!id) return res.status(400).json({"message": "provide data"});
 

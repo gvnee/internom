@@ -14,11 +14,15 @@ export default function AddBook(){
     }
     const handleCover = e => {
         setCover(e.target.files[0]);
-        console.log(e.target.files[0]);
     }
     
     const handleSubmit = e => {
         e.preventDefault();
+
+        setTitle('');
+        setPrice(0);
+        setCover(null);
+
 
         if(price > 0){
             const url = 'http://localhost:3000/book';
@@ -44,6 +48,7 @@ export default function AddBook(){
             .then(response => response.json())
             .then((data) => {
                 console.log(data);
+
             })
             .catch(error => console.log("submit error", error))
         }
@@ -102,6 +107,7 @@ export default function AddBook(){
                     type="submit"
                     value="ADD"
                     required />
+                
             </form>
         </div>
     );

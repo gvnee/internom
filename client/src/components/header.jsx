@@ -52,7 +52,7 @@ return(
     <nav className="bg-text text-white">
         <div className="flex flex-col max-w-4xl m-auto font-bold text-xs space-x-6 sm:flex-row">
             <Link to={`/`} className="ll py-5 hover:cursor-pointer border-b-2 border-b-text hover:border-b-orange-500" ><i className="fa fa-home"></i></Link>
-            <div className="ll py-5 hover:cursor-pointer border-b-2 border-b-text hover:border-b-orange-500">НОМ</div>
+            <Link to={'/books'} className="ll py-5 hover:cursor-pointer border-b-2 border-b-text hover:border-b-orange-500">НОМ</Link>
             <div className="ll py-5 hover:cursor-pointer border-b-2 border-b-text hover:border-b-orange-500">ENGLISH BOOKS</div>
             <div className="ll py-5 hover:cursor-pointer border-b-2 border-b-text hover:border-b-orange-500">ХҮҮХЭД</div>
             <div className="ll py-5 hover:cursor-pointer border-b-2 border-b-text hover:border-b-orange-500">БИЧИГ ХЭРЭГ/БЭЛЭГ ДУРСГАЛ</div>

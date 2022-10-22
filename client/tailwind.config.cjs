@@ -17,6 +17,9 @@ module.exports = {
         rng: "#fc8f43",
         footer: "#f1f1f1",
         popup: "#f39c12"
+      },
+      backgroundImage: {
+      hero: "url('./src/assets/hero.jpg')"
       }
     },
   },

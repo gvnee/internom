@@ -1,11 +1,12 @@
-import cover from "../../../server/images/cover.jpeg";
+import {Link} from "react-router-dom"
 
 export default function Book(props){
+
     return (
-        <div>
-            <img className="w-32" src={cover} alt="book cover image" />
+        <Link className="w-1/6" to={`/book/${props.id}`}>
+            <img src={ 'http://localhost:3000/images/' + props.image } alt="book cover image" />
             <p className="text-center text-lg my-4">{props.title}</p>
             <p className="text-orange-500 text-lg">price: {props.price}$</p>
-        </div>
+        </Link>
     )
 };
